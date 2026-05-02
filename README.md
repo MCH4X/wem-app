@@ -51,14 +51,21 @@ make clean
 
 ### CI Pipeline
 
-The backend CI runs automatically on pushes and pull requests to `main` when files in `backend/` change.
+The backend CI runs automatically on every push and pull request to `main`.  
+It uses [`dorny/paths-filter`](https://github.com/dorny/paths-filter) to detect changes — CI steps only run when `backend/` files are modified, but a status is **always returned** to avoid Branch Protection deadlocks.
 
 ```
-Lint → Test → Build
+Every PR
+  │
+  ▼
+changes (detect modified paths)
+  │
+  ├── backend changed → Lint → Test → Build
+  └── no backend changes → skip (success)
 ```
 
-| Step  | Tool              | Description                  |
-|-------|-------------------|------------------------------|
+| Step  | Tool              | Description                    |
+|-------|-------------------|--------------------------------|
 | Lint  | golangci-lint     | Code quality & static analysis |
 | Test  | go test -race     | Unit tests with race detection |
-| Build | go build          | Compile binary               |
+| Build | make build        | Compile binary to `bin/api`    |
