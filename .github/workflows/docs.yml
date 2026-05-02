@@ -1,4 +1,4 @@
-name: docs-ci
+name: Docs CI
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - "docs/**"
 
 jobs:
-  docs:
+  docs-ci:
     runs-on: ubuntu-latest
     steps:
       - run: echo "docs ok"
