@@ -1,21 +1,28 @@
 # wem-app
 
+[![Backend CI](https://github.com/MCH4X/wem-app/actions/workflows/backend.yml/badge.svg)](https://github.com/MCH4X/wem-app/actions/workflows/backend.yml)
+
 WEM — Where's My Money? 💸 Track it before it's gone again. 🔍
 
 ## Project Structure
 
 ```
 wem-app/
-├── backend/          # Go API server
-│   ├── cmd/          # Application entry point
-│   ├── internal/     # Private application code
-│   │   ├── handlers/ # HTTP handlers
-│   │   └── routes/   # Route definitions
-│   ├── Makefile      # Build & dev commands
-│   └── .golangci.yml # Linter configuration
+├── backend/              # Go API server
+│   ├── cmd/              # Application entry point
+│   ├── internal/         # Private application code
+│   │   ├── database/     # Database connection & migrations
+│   │   ├── handlers/     # HTTP handlers
+│   │   ├── models/       # Data models
+│   │   ├── repositories/ # Database interaction layer
+│   │   ├── routes/       # Route definitions
+│   │   └── services/     # Business logic layer
+│   ├── docker-compose.yml# Docker setup for dependencies
+│   ├── Makefile          # Build & dev commands
+│   └── .golangci.yml     # Linter configuration
 └── .github/
     └── workflows/
-        └── backend.yml  # CI pipeline
+        └── backend.yml   # CI pipeline
 ```
 
 ## Backend
