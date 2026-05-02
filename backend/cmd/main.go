@@ -1,18 +1,15 @@
 package main
 
 import (
-	"log"
-
+	"github.com/MCH4X/wem-app/backend/internal/database"
+	model "github.com/MCH4X/wem-app/backend/internal/models"
 	"github.com/MCH4X/wem-app/backend/internal/routes"
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	router := gin.Default()
+	db := database.InitDB()
+	// auto migrate
+	db.AutoMigrate(&model.User{})
 
-	routes.SetupRouter(router)
-
-	if err := router.Run(":8080"); err != nil {
-		log.Fatalf("failed to start server: %v", err)
-	}
+	routes.SetupRouter(db)
 }
