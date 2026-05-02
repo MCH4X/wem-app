@@ -1,4 +1,5 @@
 name: Backend CI
+
 on:
   push:
     branches: ["main"]
@@ -35,6 +36,7 @@ jobs:
         with:
           version: latest
           working-directory: backend
+          install-mode: goinstall
 
       - name: Test
         run: go test -race -v ./...
