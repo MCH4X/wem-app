@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/MCH4X/wem-app/backend/internal/routes"
 	"github.com/gin-gonic/gin"
 )
@@ -10,5 +12,7 @@ func main() {
 
 	routes.SetupRouter(router)
 
-	router.Run(":8080")
+	if err := router.Run(":8080"); err != nil {
+		log.Fatalf("failed to start server: %v", err)
+	}
 }
