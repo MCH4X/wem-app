@@ -1,4 +1,4 @@
-.PHONY: lint test run dev
+.PHONY: lint test run build dev clean
 
 lint:
 	golangci-lint run -v
@@ -9,6 +9,11 @@ test:
 run:
 	go run ./cmd
 
-dev: lint test
+build:
+	go build -o bin/api ./cmd
+
+clean:
+	rm -rf bin/
+
+dev: lint test build
 	@echo "✅ All checks passed"
-	@printf "\a"
