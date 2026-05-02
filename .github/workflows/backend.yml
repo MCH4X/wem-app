@@ -3,14 +3,9 @@ name: Backend CI
 on:
   push:
     branches: ["main"]
-    paths:
-      - "backend/**"
-      - ".github/workflows/backend.yml"
   pull_request:
     branches: ["main"]
-    paths:
-      - "backend/**"
-      - ".github/workflows/backend.yml"
+
 defaults:
   run:
     working-directory: ./backend
@@ -20,7 +15,23 @@ permissions:
   pull-requests: read
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - "backend/**"
+              - ".github/workflows/backend.yml"
+
   backend-ci:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
