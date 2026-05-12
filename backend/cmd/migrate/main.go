@@ -40,7 +40,11 @@ func main() {
 	if err != nil {
 		log.Fatal("failed to init migrations:", err)
 	}
-	defer m.Close()
+	defer func() {
+		if srcErr, dbErr := m.Close(); srcErr != nil || dbErr != nil {
+			log.Printf("migrate close errors: src=%v db=%v", srcErr, dbErr)
+		}
+	}()
 
 	switch direction {
 	case "up":
